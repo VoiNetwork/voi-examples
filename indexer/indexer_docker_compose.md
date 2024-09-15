@@ -38,6 +38,19 @@ The current status can be checked by running the following command:
 docker exec -it indexer-voi-node-1 /node/bin/goal -d /algod/data node status
 ```
 
+## Token configuration
+
+The `voi-node` service has two tokens configured in `./algod-data/algod.token` and `./algod-data/algod.admin.token`.
+These tokens are used from with `conduit-data/conduit.yml`, and should be rotated.
+
+To generate a single new token, run the following command:
+
+```bash
+head -c 32 /dev/urandom | shasum -a 256 | cut -d ' ' -f 1
+```
+
+After running the tool update configuration files listed above.
+
 ## Postgres configuration
 
 The Postgres connection strings and default credentials can be found in the `docker-compose.yml` file, 
