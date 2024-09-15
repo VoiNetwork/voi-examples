@@ -38,6 +38,11 @@ The current status can be checked by running the following command:
 docker exec -it indexer-voi-node-1 /node/bin/goal -d /algod/data node status
 ```
 
+## Postgres configuration
+
+The Postgres connection strings and default credentials can be found in the `docker-compose.yml` file, 
+as well as with `conduit-data/conduit.yml` containing connection strings.
+
 ## Conduit configuration
 
 Documentation on the conduit configuration can be found [here](https://github.com/algorand/conduit?tab=readme-ov-file#create-conduityml-configuration-file)
