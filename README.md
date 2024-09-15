@@ -6,4 +6,4 @@ Repository containing examples of how to interact with the Voi network.
 
 This project contains a Docker compose file and configurations for running an indexer on the network.
 
-Learn more in the [Indexer Docker Compose example](indexer/indexer_docker_compose.md).
+Learn more in the [Indexer Docker Compose example](indexer/indexer-docker-compose.md).
