@@ -1,13 +1,14 @@
-# Indexer Docker Compose example
+# Indexer Docker Compose Setup Guide
 
-This project contains a Docker compose file and configurations for running an indexer on the network.
+This project includes a Docker Compose file and necessary configurations to run an indexer on the Voi network.
 
+## Overview of Docker Servuces
 The Docker Compose file defines the following servers:
 
-1. **voi-node**: This service runs the node that connects to the Voi network.
-2. **conduit**: This service runs the Conduit service that fetches data from **voi-node** and stores data in a Postgres db.
-2. **postgres**: This service runs the Postgres db that stores the data processed by the Conduit service. Data is stored on a Docker volume.
-2. **indexer**: This service runs the indexer that fetches data from the Postgres db.
+1. **voi-node**: This service connects to the Voi network by running a node.
+2. **conduit**: This service retrieves data from the **voi-node** and stores it in a Postgres database.
+2. **postgres**: This service runs the Postgres database to store data processed by the Conduit service. The data is persisted on a Docker volume.
+2. **indexer**: This service retrieves data from the Postgres database.
 
 ```mermaid
 graph TD;
@@ -16,37 +17,39 @@ graph TD;
     end
 
     subgraph Docker Services
-        VoiNode[Voi-Node] -->|Pulls from| VoiBlockchain
+        VoiNode[voi-node] -->|Pulls from| VoiBlockchain
         Conduit[Conduit] -->|Queries| VoiNode
         Conduit -->|Saves Data| PostgresDB[(Postgres DB)]
         Indexer[Indexer] -->|Queries| PostgresDB
     end
 ```
 
-## Running the project
+## How to Run the Project
 
 ```sh
 docker compose up -d
 ```
 
-## Stopping the project
+## How to Stop the Project
 
 ```sh
 docker compose down
 ```
 
-## Connecting to the indexer
+## Accessing the Indexer 
+
+Once the indexer is up, you can query it via this example command:
 
 ```sh
 curl http://localhost:8980/v2/accounts
 ```
 
-## Catching up with the network
+## Network Syncing Process
 
-The voi-node service will start syncing with the network, with the conduit service advancing blocks.
-This may take an extended period of time.
+The voi-node service will begin syncing with the Voi network. 
+The conduit service will continue advancing the block processing as syncing progresses, which may take some time.
 
-The current status can be checked by running the following command:
+You can check the current sync status with the following command:
 
 ```bash
 docker exec -it indexer-voi-node-1 /node/bin/goal -d /algod/data node status
@@ -54,30 +57,34 @@ docker exec -it indexer-voi-node-1 /node/bin/goal -d /algod/data node status
 
 ## Token configuration
 
-The `voi-node` service has two tokens configured in `./algod-data/algod.token` and `./algod-data/algod.admin.token`.
-These tokens are used from with `conduit-data/conduit.yml`, and should be rotated.
+The voi-node service utilizes two tokens, stored in the following files:
 
-To generate a single new token, run the following command:
+- `algod-data/algod.token`
+- `algod-data/algod.admin.token`
+
+These tokens are also referenced in `conduit-data/conduit.yml`.
+
+To generate a new token, run this command:
 
 ```bash
 head -c 32 /dev/urandom | shasum -a 256 | cut -d ' ' -f 1
 ```
 
-After running the tool update configuration files listed above.
+Once generated, be sure to update the corresponding configuration files.
 
-## Postgres configuration
+## Postgres Configuration
 
-The Postgres connection strings and default credentials can be found in the `docker-compose.yml` file, 
-as well as with `conduit-data/conduit.yml` containing connection strings.
+Postgres connection strings and default credentials are located within the `docker-compose.yml` file. 
+Additionally, you can find the Postgres connection settings in `conduit-data/conduit.yml`.
 
-## Conduit configuration
+## Conduit Configuration
 
 Documentation on the conduit configuration can be found [here](https://github.com/algorand/conduit?tab=readme-ov-file#create-conduityml-configuration-file)
 
-## Indexer configuration
+## Indexer Configuration
 
 Documentation on the indexer configuration can be found [here](https://github.com/algorand/indexer?tab=readme-ov-file#disabling-parameters)
 
-## Indexer REST API documentation
+## Indexer REST API Documentation
 
-The indexer REST API documentation can be found [here](https://developer.algorand.org/docs/rest-apis/indexer/)
+Comprehensive documentation for the Indexer REST API is available [here](https://developer.algorand.org/docs/rest-apis/indexer/)
