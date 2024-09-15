@@ -26,6 +26,12 @@ graph LR;
 
 ## How to Run the Project
 
+Create a Docker network called `indexer`
+
+```sh
+docker network create indexer
+```
+
 ```sh
 docker compose up -d
 ```
@@ -88,3 +94,17 @@ Documentation on the indexer configuration can be found [here](https://github.co
 ## Indexer REST API Documentation
 
 Comprehensive documentation for the Indexer REST API is available [here](https://developer.algorand.org/docs/rest-apis/indexer/)
+
+## Deleting the setup
+
+Remove the named Docker overlay network `indexer`
+
+```sh
+docket network rm indexer
+```
+
+Remove the Docker volume that contains the Postgres database
+
+```sh
+docker volume rm indexer_postgres-data
+```
