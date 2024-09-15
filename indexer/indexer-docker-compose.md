@@ -9,6 +9,20 @@ The Docker Compose file defines the following servers:
 2. **postgres**: This service runs the Postgres db that stores the data processed by the Conduit service. Data is stored on a Docker volume.
 2. **indexer**: This service runs the indexer that fetches data from the Postgres db.
 
+```mermaid
+graph TD;
+    subgraph Internet
+        VoiBlockchain[Voi Blockchain]
+    end
+
+    subgraph Docker Services
+        VoiNode[Voi-Node] -->|Pulls from| VoiBlockchain
+        Conduit[Conduit] -->|Queries| VoiNode
+        Conduit -->|Saves Data| PostgresDB[(Postgres DB)]
+        Indexer[Indexer] -->|Queries| PostgresDB
+    end
+```
+
 ## Running the project
 
 ```sh
