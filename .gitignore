@@ -1,0 +1,13 @@
+.idea/
+indexer/conduit-data/exporter_postgresql
+indexer/conduit-data/importer_algod
+indexer/conduit-data/metadata.json
+indexer/algod-data/goal.cache
+indexer/algod-data/voimain-v1.0
+indexer/algod-data/algod.lock
+indexer/algod-data/algod.net
+indexer/algod-data/algod.pid
+indexer/algod-data/config.json
+indexer/algod-data/genesis.json
+indexer/algod-data/logging.config
+indexer/algod-data/node.log

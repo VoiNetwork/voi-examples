@@ -1,0 +1,58 @@
+services:
+  voinode:
+    image: ghcr.io/voinetwork/voi-node:latest
+    environment:
+      - VOINETWORK_NETWORK=mainnet
+      - VOINETWORK_PROFILE=conduit
+      - VOINETWORK_CATCHUP=0
+    volumes:
+      - type: bind
+        source: ./algod-data
+        target: /algod/data
+    restart: always
+    networks:
+      - indexer
+  postgres:
+    image: postgres:latest
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=pgpass
+      - POSTGRES_USER=pguser
+      - POSTGRES_DB=conduit
+    restart: always
+    networks:
+      - indexer
+  conduit:
+    image: algorand/conduit:latest
+    volumes:
+      - type: bind
+        source: ./conduit-data
+        target: /conduit/data
+    networks:
+      - indexer
+    command: [
+      "-d", "/conduit/data"
+    ]
+    restart: always
+    depends_on:
+      - postgres
+      - voinode
+  indexer:
+    image: algorand/indexer:latest
+    ports:
+      - "8980:8980"
+    networks:
+      - indexer
+    command: [
+      "daemon", "-S", ":8980", "--data-dir", "/tmp", "--postgres", "host=postgres port=5432 user=pguser password=pgpass dbname=conduit"
+    ]
+    restart: always
+    depends_on:
+      - conduit
+volumes:
+  postgres-data:
+    driver: local
+networks:
+  indexer:
+    external: true
