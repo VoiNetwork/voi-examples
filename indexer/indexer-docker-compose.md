@@ -1,4 +1,4 @@
-# Indexer Docker Compose Setup Guide
+# Indexer Docker Compose Example Setup Guide
 
 This project includes a Docker Compose file and necessary configurations to run an indexer on the Voi network.
 

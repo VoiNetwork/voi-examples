@@ -10,6 +10,8 @@ services:
         source: ./algod-data
         target: /algod/data
     restart: always
+    logging:
+      driver: local
     networks:
       - indexer
   postgres:
@@ -21,6 +23,8 @@ services:
       - POSTGRES_USER=pguser
       - POSTGRES_DB=conduit
     restart: always
+    logging:
+      driver: local
     networks:
       - indexer
   conduit:
@@ -35,6 +39,8 @@ services:
       "-d", "/conduit/data"
     ]
     restart: always
+    logging:
+      driver: local
     depends_on:
       - postgres
       - voi-node
@@ -48,6 +54,8 @@ services:
       "daemon", "-S", ":8980", "--data-dir", "/tmp", "--postgres", "host=postgres port=5432 user=pguser password=pgpass dbname=conduit"
     ]
     restart: always
+    logging:
+      driver: local
     depends_on:
       - conduit
 volumes:
