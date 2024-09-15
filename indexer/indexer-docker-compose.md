@@ -11,13 +11,13 @@ The Docker Compose file defines the following servers:
 2. **indexer**: This service retrieves data from the Postgres database.
 
 ```mermaid
-graph TD;
+graph LR;
     subgraph Internet
         VoiBlockchain[Voi Blockchain]
     end
 
     subgraph Docker Services
-        VoiNode[voi-node] -->|Pulls from| VoiBlockchain
+        VoiBlockchain -->|Provides Data| VoiNode[voi-node]
         Conduit[Conduit] -->|Queries| VoiNode
         Conduit -->|Saves Data| PostgresDB[(Postgres DB)]
         Indexer[Indexer] -->|Queries| PostgresDB
