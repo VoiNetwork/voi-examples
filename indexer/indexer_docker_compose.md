@@ -4,8 +4,8 @@ This project contains a Docker compose file and configurations for running an in
 
 The Docker Compose file defines the following servers:
 
-1. **voinode**: This service runs the node that connects to the Voi network.
-2. **conduit**: This service runs the Conduit service that fetches data from **voinode** and stores data in a Postgres db.
+1. **voi-node**: This service runs the node that connects to the Voi network.
+2. **conduit**: This service runs the Conduit service that fetches data from **voi-node** and stores data in a Postgres db.
 2. **postgres**: This service runs the Postgres db that stores the data processed by the Conduit service. Data is stored on a Docker volume.
 2. **indexer**: This service runs the indexer that fetches data from the Postgres db.
 
@@ -25,6 +25,17 @@ docker compose down
 
 ```sh
 curl http://localhost:8980/v2/accounts
+```
+
+## Catching up with the network
+
+The voi-node service will start syncing with the network, with the conduit service advancing blocks.
+This may take an extended period of time.
+
+The current status can be checked by running the following command:
+
+```bash
+docker exec -it indexer-voi-node-1 /node/bin/goal -d /algod/data node status
 ```
 
 ## Conduit configuration

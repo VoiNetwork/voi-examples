@@ -40,7 +40,7 @@ importer:
     mode: "follower"
 
     # Algod API address.
-    netaddr: "http://voinode:8080"
+    netaddr: "http://voi-node:8080"
 
     # Algod API token. Found in the algod.token file.
     token: "c7221a306aba6fa4b79fa1e823d2ca748d664388804a4c95997b5ffe262fc84b"
