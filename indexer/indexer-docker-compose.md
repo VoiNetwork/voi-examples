@@ -2,7 +2,7 @@
 
 This project includes a Docker Compose file and necessary configurations to run an indexer on the Voi network.
 
-## Overview of Docker Servuces
+## Overview of Docker Services
 The Docker Compose file defines the following servers:
 
 1. **voi-node**: This service connects to the Voi network by running a node.
@@ -61,7 +61,7 @@ You can check the current sync status with the following command:
 docker exec -it indexer-voi-node-1 /node/bin/goal -d /algod/data node status
 ```
 
-## Token configuration
+## Token Configuration
 
 The voi-node service utilizes two tokens, stored in the following files:
 
@@ -95,7 +95,7 @@ Documentation on the indexer configuration can be found [here](https://github.co
 
 Comprehensive documentation for the Indexer REST API is available [here](https://developer.algorand.org/docs/rest-apis/indexer/)
 
-## Deleting the setup
+## Deleting the Setup
 
 Remove the named Docker overlay network `indexer`
 
